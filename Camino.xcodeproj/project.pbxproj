@@ -1,0 +1,536 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		03CB17C77C4C453820D0C082 /* CaminoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D14D2152245F96217266B5A3 /* CaminoView.swift */; };
+		1C251319DE09F6F174947AEF /* LedgerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8BFDEC8A505FAAFF4DB86B8 /* LedgerTests.swift */; };
+		258CB14C2A32C73B94E661D4 /* LookBackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DBE5E90DB11A63384080C7 /* LookBackView.swift */; };
+		3361E0688F2A531F555BF5CA /* SceneSignals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9FE363E66012086FD3EABB /* SceneSignals.swift */; };
+		3DBF41BCC042905FFE044423 /* ReminderScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B2D9309B3F2FD303ED58AFD /* ReminderScheduler.swift */; };
+		43EC9FB6B89B119732EE9627 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 405A99A8A6FD4A75B9F927A8 /* Models.swift */; };
+		461D9F49CD3D8F269686ECB3 /* ConfirmMathTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CF6DE9DDEB649664EB3D91D /* ConfirmMathTests.swift */; };
+		4E0601A408708F06FA0199B7 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94031CBC62AAC20484C25F91 /* RootView.swift */; };
+		4FEC1DF88766E582367B6C7C /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29233DC8A89A1B28E2630D5B /* Theme.swift */; };
+		63596C7EB4E717D230AD1A41 /* HearthScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61E85FC8F883C444F528686 /* HearthScene.swift */; };
+		7440DC6C6D22BBB0A542E839 /* SceneSignalsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07B1833DE74141DDB5594481 /* SceneSignalsTests.swift */; };
+		773C96DEFFD3E77BB725BEF3 /* JourneyExport.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA5CBF69A1943148C6E13881 /* JourneyExport.swift */; };
+		7FDE81A2C76957DAFB8A9C1E /* ConfirmMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A82A434739B29AE5BBB718 /* ConfirmMath.swift */; };
+		8151CEC984D6BD3AFE253FCA /* Ledger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F926F2AEAA048B660AAA932 /* Ledger.swift */; };
+		8A75C6B1E6C7D510C0FBAE4B /* SlotDraft.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EC16B3270B9F35D31F0859D /* SlotDraft.swift */; };
+		98CC0ED150382356A7571348 /* Copy.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3D780769319CF8F097407E7 /* Copy.swift */; };
+		A54A74371EEC9D13AF665C40 /* PiecePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA0B7DB47420EB72E2FA7A9 /* PiecePicker.swift */; };
+		B51576F1C43AB46BF97C0D6B /* RescueSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 248F8E2694C97363B1D5791C /* RescueSheet.swift */; };
+		B751F402ACA466B79322A8E6 /* CaminoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2CF90226CD286CD9F70D55 /* CaminoApp.swift */; };
+		BAC8BBB6F6922B7656F63036 /* SlotEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FEE404664E847A775DAC0C7 /* SlotEditorView.swift */; };
+		D0C3A7CD090C1C87E44EDBAC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DE4DB6BF964C5EF93FA84344 /* Assets.xcassets */; };
+		DA0E616EB717489292EC0D32 /* ConfirmSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 768A5E51A32FBF33E259D7F1 /* ConfirmSheet.swift */; };
+		E41F7CEB99C4511F8D5F9E65 /* Amount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 369748F16CF1E165E5DD2BBB /* Amount.swift */; };
+		F03EFF754C1D76097255BDAF /* ProtocolEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F2E0418739BEF303924A1F /* ProtocolEditorView.swift */; };
+		F56EA0FAC621BA6528B883CA /* StepStone.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EAEF431CE5CBEC0445C959 /* StepStone.swift */; };
+		FD6E8E21C988EFB7B423F1AA /* DisclaimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0514E6C8F3E046602F1F5AF2 /* DisclaimerView.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		507F5A5347A3EAB75150E5D0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 31A5EF2584AC74C9C9FFD277 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 122507BBA141F59075EA1E82;
+			remoteInfo = Camino;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		0514E6C8F3E046602F1F5AF2 /* DisclaimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisclaimerView.swift; sourceTree = "<group>"; };
+		07B1833DE74141DDB5594481 /* SceneSignalsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneSignalsTests.swift; sourceTree = "<group>"; };
+		0DA0B7DB47420EB72E2FA7A9 /* PiecePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PiecePicker.swift; sourceTree = "<group>"; };
+		0EC16B3270B9F35D31F0859D /* SlotDraft.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlotDraft.swift; sourceTree = "<group>"; };
+		1CF6DE9DDEB649664EB3D91D /* ConfirmMathTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmMathTests.swift; sourceTree = "<group>"; };
+		248F8E2694C97363B1D5791C /* RescueSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RescueSheet.swift; sourceTree = "<group>"; };
+		26892C5F9892EC7E533510BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		29233DC8A89A1B28E2630D5B /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		2FEE404664E847A775DAC0C7 /* SlotEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlotEditorView.swift; sourceTree = "<group>"; };
+		34A82A434739B29AE5BBB718 /* ConfirmMath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmMath.swift; sourceTree = "<group>"; };
+		369748F16CF1E165E5DD2BBB /* Amount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Amount.swift; sourceTree = "<group>"; };
+		405A99A8A6FD4A75B9F927A8 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
+		5B2D9309B3F2FD303ED58AFD /* ReminderScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderScheduler.swift; sourceTree = "<group>"; };
+		5B9FE363E66012086FD3EABB /* SceneSignals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneSignals.swift; sourceTree = "<group>"; };
+		768A5E51A32FBF33E259D7F1 /* ConfirmSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmSheet.swift; sourceTree = "<group>"; };
+		8F926F2AEAA048B660AAA932 /* Ledger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ledger.swift; sourceTree = "<group>"; };
+		94031CBC62AAC20484C25F91 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		94F2E0418739BEF303924A1F /* ProtocolEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtocolEditorView.swift; sourceTree = "<group>"; };
+		9F2CF90226CD286CD9F70D55 /* CaminoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaminoApp.swift; sourceTree = "<group>"; };
+		A3DBE5E90DB11A63384080C7 /* LookBackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LookBackView.swift; sourceTree = "<group>"; };
+		A9A406FC0FDEF87600B42625 /* CaminoTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = CaminoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		BA5CBF69A1943148C6E13881 /* JourneyExport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JourneyExport.swift; sourceTree = "<group>"; };
+		D14D2152245F96217266B5A3 /* CaminoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaminoView.swift; sourceTree = "<group>"; };
+		D4EAEF431CE5CBEC0445C959 /* StepStone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepStone.swift; sourceTree = "<group>"; };
+		DE4DB6BF964C5EF93FA84344 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		E3D780769319CF8F097407E7 /* Copy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Copy.swift; sourceTree = "<group>"; };
+		E61E85FC8F883C444F528686 /* HearthScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HearthScene.swift; sourceTree = "<group>"; };
+		E8BFDEC8A505FAAFF4DB86B8 /* LedgerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LedgerTests.swift; sourceTree = "<group>"; };
+		F4270248004AB820AAC1BD84 /* Camino.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Camino.app; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		4999B7097635966C87DEF1FD = {
+			isa = PBXGroup;
+			children = (
+				91BD7B537E633151881E31B1 /* Camino */,
+				59379AA6BB62C1E837B1A0A6 /* CaminoTests */,
+				9F45D36CF006FD09577C1188 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		59379AA6BB62C1E837B1A0A6 /* CaminoTests */ = {
+			isa = PBXGroup;
+			children = (
+				1CF6DE9DDEB649664EB3D91D /* ConfirmMathTests.swift */,
+				E8BFDEC8A505FAAFF4DB86B8 /* LedgerTests.swift */,
+				07B1833DE74141DDB5594481 /* SceneSignalsTests.swift */,
+			);
+			path = CaminoTests;
+			sourceTree = "<group>";
+		};
+		91BD7B537E633151881E31B1 /* Camino */ = {
+			isa = PBXGroup;
+			children = (
+				369748F16CF1E165E5DD2BBB /* Amount.swift */,
+				DE4DB6BF964C5EF93FA84344 /* Assets.xcassets */,
+				9F2CF90226CD286CD9F70D55 /* CaminoApp.swift */,
+				D14D2152245F96217266B5A3 /* CaminoView.swift */,
+				34A82A434739B29AE5BBB718 /* ConfirmMath.swift */,
+				768A5E51A32FBF33E259D7F1 /* ConfirmSheet.swift */,
+				E3D780769319CF8F097407E7 /* Copy.swift */,
+				0514E6C8F3E046602F1F5AF2 /* DisclaimerView.swift */,
+				E61E85FC8F883C444F528686 /* HearthScene.swift */,
+				26892C5F9892EC7E533510BD /* Info.plist */,
+				BA5CBF69A1943148C6E13881 /* JourneyExport.swift */,
+				8F926F2AEAA048B660AAA932 /* Ledger.swift */,
+				A3DBE5E90DB11A63384080C7 /* LookBackView.swift */,
+				405A99A8A6FD4A75B9F927A8 /* Models.swift */,
+				0DA0B7DB47420EB72E2FA7A9 /* PiecePicker.swift */,
+				94F2E0418739BEF303924A1F /* ProtocolEditorView.swift */,
+				5B2D9309B3F2FD303ED58AFD /* ReminderScheduler.swift */,
+				248F8E2694C97363B1D5791C /* RescueSheet.swift */,
+				94031CBC62AAC20484C25F91 /* RootView.swift */,
+				5B9FE363E66012086FD3EABB /* SceneSignals.swift */,
+				0EC16B3270B9F35D31F0859D /* SlotDraft.swift */,
+				2FEE404664E847A775DAC0C7 /* SlotEditorView.swift */,
+				D4EAEF431CE5CBEC0445C959 /* StepStone.swift */,
+				29233DC8A89A1B28E2630D5B /* Theme.swift */,
+			);
+			path = Camino;
+			sourceTree = "<group>";
+		};
+		9F45D36CF006FD09577C1188 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F4270248004AB820AAC1BD84 /* Camino.app */,
+				A9A406FC0FDEF87600B42625 /* CaminoTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		0F7F585BF8C34C31C2B1F328 /* CaminoTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DB904DC6C02806408B839FAF /* Build configuration list for PBXNativeTarget "CaminoTests" */;
+			buildPhases = (
+				A1C8FADFD7C0AC69CD399B5F /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3FD66C81443451A3F886223A /* PBXTargetDependency */,
+			);
+			name = CaminoTests;
+			packageProductDependencies = (
+			);
+			productName = CaminoTests;
+			productReference = A9A406FC0FDEF87600B42625 /* CaminoTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		122507BBA141F59075EA1E82 /* Camino */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D83A1DBDD563220A30328C50 /* Build configuration list for PBXNativeTarget "Camino" */;
+			buildPhases = (
+				D38AFB0BABB76FAD0F81E24B /* Sources */,
+				1441E70A3027075DAA1FBAD4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Camino;
+			packageProductDependencies = (
+			);
+			productName = Camino;
+			productReference = F4270248004AB820AAC1BD84 /* Camino.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		31A5EF2584AC74C9C9FFD277 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					0F7F585BF8C34C31C2B1F328 = {
+						DevelopmentTeam = D4ADFZ3XZL;
+						ProvisioningStyle = Automatic;
+					};
+					122507BBA141F59075EA1E82 = {
+						DevelopmentTeam = D4ADFZ3XZL;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 6CE6BAB92CA226DCBF58E582 /* Build configuration list for PBXProject "Camino" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 4999B7097635966C87DEF1FD;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 9F45D36CF006FD09577C1188 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				122507BBA141F59075EA1E82 /* Camino */,
+				0F7F585BF8C34C31C2B1F328 /* CaminoTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1441E70A3027075DAA1FBAD4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D0C3A7CD090C1C87E44EDBAC /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A1C8FADFD7C0AC69CD399B5F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				461D9F49CD3D8F269686ECB3 /* ConfirmMathTests.swift in Sources */,
+				1C251319DE09F6F174947AEF /* LedgerTests.swift in Sources */,
+				7440DC6C6D22BBB0A542E839 /* SceneSignalsTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D38AFB0BABB76FAD0F81E24B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E41F7CEB99C4511F8D5F9E65 /* Amount.swift in Sources */,
+				B751F402ACA466B79322A8E6 /* CaminoApp.swift in Sources */,
+				03CB17C77C4C453820D0C082 /* CaminoView.swift in Sources */,
+				7FDE81A2C76957DAFB8A9C1E /* ConfirmMath.swift in Sources */,
+				DA0E616EB717489292EC0D32 /* ConfirmSheet.swift in Sources */,
+				98CC0ED150382356A7571348 /* Copy.swift in Sources */,
+				FD6E8E21C988EFB7B423F1AA /* DisclaimerView.swift in Sources */,
+				63596C7EB4E717D230AD1A41 /* HearthScene.swift in Sources */,
+				773C96DEFFD3E77BB725BEF3 /* JourneyExport.swift in Sources */,
+				8151CEC984D6BD3AFE253FCA /* Ledger.swift in Sources */,
+				258CB14C2A32C73B94E661D4 /* LookBackView.swift in Sources */,
+				43EC9FB6B89B119732EE9627 /* Models.swift in Sources */,
+				A54A74371EEC9D13AF665C40 /* PiecePicker.swift in Sources */,
+				F03EFF754C1D76097255BDAF /* ProtocolEditorView.swift in Sources */,
+				3DBF41BCC042905FFE044423 /* ReminderScheduler.swift in Sources */,
+				B51576F1C43AB46BF97C0D6B /* RescueSheet.swift in Sources */,
+				4E0601A408708F06FA0199B7 /* RootView.swift in Sources */,
+				3361E0688F2A531F555BF5CA /* SceneSignals.swift in Sources */,
+				8A75C6B1E6C7D510C0FBAE4B /* SlotDraft.swift in Sources */,
+				BAC8BBB6F6922B7656F63036 /* SlotEditorView.swift in Sources */,
+				F56EA0FAC621BA6528B883CA /* StepStone.swift in Sources */,
+				4FEC1DF88766E582367B6C7C /* Theme.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		3FD66C81443451A3F886223A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 122507BBA141F59075EA1E82 /* Camino */;
+			targetProxy = 507F5A5347A3EAB75150E5D0 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		13028FD823019DE15BB7BF39 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = D4ADFZ3XZL;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Camino;
+				INFOPLIST_KEY_LSRequiresIPhoneOS = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		238EB28938787F8B2D178AA7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = D4ADFZ3XZL;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Camino;
+				INFOPLIST_KEY_LSRequiresIPhoneOS = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		312A7A41FC40D4F460A76190 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = D4ADFZ3XZL;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = app.camino.personal.tests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Camino.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Camino";
+			};
+			name = Release;
+		};
+		7199EE809F27D81AB7FBB88C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = D4ADFZ3XZL;
+				INFOPLIST_FILE = Camino/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = app.camino.personal;
+				PRODUCT_NAME = Camino;
+				SDKROOT = iphoneos;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		8CC5B817C7CE13094B200EA4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = D4ADFZ3XZL;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = app.camino.personal.tests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Camino.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Camino";
+			};
+			name = Debug;
+		};
+		B1EC9434E00378E2D2CAE25D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = D4ADFZ3XZL;
+				INFOPLIST_FILE = Camino/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = app.camino.personal;
+				PRODUCT_NAME = Camino;
+				SDKROOT = iphoneos;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		6CE6BAB92CA226DCBF58E582 /* Build configuration list for PBXProject "Camino" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				13028FD823019DE15BB7BF39 /* Debug */,
+				238EB28938787F8B2D178AA7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		D83A1DBDD563220A30328C50 /* Build configuration list for PBXNativeTarget "Camino" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B1EC9434E00378E2D2CAE25D /* Debug */,
+				7199EE809F27D81AB7FBB88C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		DB904DC6C02806408B839FAF /* Build configuration list for PBXNativeTarget "CaminoTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8CC5B817C7CE13094B200EA4 /* Debug */,
+				312A7A41FC40D4F460A76190 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 31A5EF2584AC74C9C9FFD277 /* Project object */;
+}

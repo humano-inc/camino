@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<![CDATA[<div style="position:absolute;inset:0;overflow:hidden;background:#05070f">
+  <div style="{{ skyStyle }}"></div>
+  <sc-for list="{{ stars }}" as="s" hint-placeholder-count="0">
+    <div style="{{ s.style }}"></div>
+  </sc-for>
+  <div style="{{ glowStyle }}"></div>
+  <div style="{{ cloudAStyle }}"></div>
+  <div style="{{ cloudBStyle }}"></div>
+  <div style="{{ cloudCStyle }}"></div>
+  <div style="{{ landStyle }}"></div>
+  <div style="{{ pathStyle }}"></div>
+  <sc-for list="{{ markers }}" as="m" hint-placeholder-count="0">
+    <div style="{{ m.style }}"></div>
+  </sc-for>
+  <div style="{{ houseWrapStyle }}">
+    <div style="{{ roofStyle }}"></div>
+    <div style="{{ bodyStyle }}">
+      <div style="{{ windowStyle }}"></div>
+    </div>
+  </div>
+  <div style="{{ rainStyle }}"></div>
+  <div style="{{ grainStyle }}"></div>
+  <div style="position:absolute;inset:0;background:radial-gradient(120% 70% at 50% 78%, rgba(0,0,0,0) 40%, rgba(0,0,0,.42) 100%);pointer-events:none"></div>
+</div>]]>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:393,&quot;height&quot;:852},&quot;b&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:0.2,&quot;min&quot;:0,&quot;max&quot;:1,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;},&quot;d&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:0.1,&quot;min&quot;:0,&quot;max&quot;:1,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;},&quot;w&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:0,&quot;min&quot;:0,&quot;max&quot;:1,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;},&quot;h&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:852,&quot;tsType&quot;:&quot;number&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    const num = (v, d) => { const n = parseFloat(v); return isNaN(n) ? d : n; };
+    const b = Math.max(0, Math.min(1, num(this.props.b, 0.2)));
+    const d = Math.max(0, Math.min(1, num(this.props.d, 0.1)));
+    const w = Math.max(0, Math.min(1, num(this.props.w, 0)));
+    const H = num(this.props.h, 852), W = num(this.props.w2, 393);
+    const horizon = H * 0.44;
+
+    const hex = (h) => [parseInt(h.slice(1,3),16), parseInt(h.slice(3,5),16), parseInt(h.slice(5,7),16)];
+    const mix = (a, c, t) => { const A = hex(a), C = hex(c);
+      return `rgb(${Math.round(A[0]+(C[0]-A[0])*t)},${Math.round(A[1]+(C[1]-A[1])*t)},${Math.round(A[2]+(C[2]-A[2])*t)})`; };
+
+    const top = mix('#05070f', '#8fb2d6', b);
+    const mid = mix('#0a1020', '#bcd0e2', b);
+    const low = mix('#131c30', '#f3d3a4', b);
+    const skyStyle = `position:absolute;left:0;right:0;top:0;height:${horizon+2}px;background:linear-gradient(180deg, ${top} 0%, ${mid} 58%, ${low} 100%)`;
+
+    const starOp = Math.max(0, 0.85 - b * 1.15);
+    const pts = [[8,7,1.4],[19,14,1],[27,5,1.2],[36,20,1],[44,9,1.6],[52,17,1],[61,6,1.2],[69,15,1.4],[77,10,1],[86,19,1.2],[93,8,1.4],[13,25,1],[31,30,1.2],[57,27,1],[72,31,1.2],[88,28,1],[4,17,1],[48,33,1]];
+    const stars = pts.map((p, i) => ({ key: i, style: `position:absolute;left:${p[0]}%;top:${p[1]}%;width:${p[2]}px;height:${p[2]}px;border-radius:50%;background:#fff;opacity:${(starOp * (0.5 + (i % 4) * 0.17)).toFixed(2)}` }));
+
+    const glowH = 70 + 250 * b;
+    const glowStyle = `position:absolute;left:-10%;right:-10%;top:${horizon - glowH}px;height:${glowH}px;background:radial-gradient(100% 100% at 50% 100%, ${mix('#e0a45e','#ffe9c2',b)} 0%, rgba(0,0,0,0) 72%);opacity:${(0.16 + 0.7 * b).toFixed(2)}`;
+
+    const cl = (left, top2, wd, ht, o, blur) => `position:absolute;left:${left}%;top:${top2}px;width:${wd}px;height:${ht}px;border-radius:50%;background:${mix('#6d7790','#9aa3b4',b)};filter:blur(${blur}px);opacity:${(o*w).toFixed(2)}`;
+    const cloudAStyle = cl(-8, horizon - 235, 250, 62, 0.72, 14);
+    const cloudBStyle = cl(42, horizon - 190, 210, 48, 0.6, 12);
+    const cloudCStyle = cl(14, horizon - 285, 170, 40, 0.45, 16);
+
+    const landTop = mix('#0b1018', '#4a5546', b);
+    const landBot = mix('#05070c', '#2c3428', b);
+    const landStyle = `position:absolute;left:0;right:0;top:${horizon}px;bottom:0;background:linear-gradient(180deg, ${landTop} 0%, ${landBot} 100%)`;
+
+    const pathCol = mix('#333c4e', '#e6d4b2', b);
+    const pathStyle = `position:absolute;left:0;right:0;top:${horizon}px;bottom:0;clip-path:polygon(48.2% 0, 51.8% 0, 79% 100%, 21% 100%);background:linear-gradient(180deg, ${mix('#1e2534','#d9c49f',b)} 0%, ${pathCol} 100%);opacity:.82`;
+
+    const markers = [0.16, 0.3, 0.46].map((t, i) => {
+      const y = horizon + (H - horizon) * t;
+      const sw = 6 + 26 * t;
+      return { key: i, style: `position:absolute;left:50%;top:${y}px;width:${sw}px;height:${sw * 0.34}px;margin-left:${-sw / 2}px;border-radius:50%;background:${mix('#1d2534','#a8916d',b)};opacity:.55` };
+    });
+
+    const hw = 14 + 140 * Math.pow(d, 1.25);
+    const hb = (H - horizon) * (1 - 0.62 * d) - 8;
+    const houseWrapStyle = `position:absolute;left:50%;bottom:${hb}px;width:${hw}px;margin-left:${-hw / 2}px`;
+    const roofStyle = `width:100%;height:${hw * 0.42}px;clip-path:polygon(50% 0,100% 100%,0 100%);background:${mix('#111823','#4b4436',b)}`;
+    const bodyStyle = `width:${hw * 0.78}px;margin:0 auto;height:${hw * 0.6}px;background:${mix('#0d131c','#5d5748',b)};position:relative`;
+    const winS = Math.max(3, hw * 0.24);
+    const windowStyle = `position:absolute;left:50%;top:${hw * 0.16}px;width:${winS}px;height:${winS}px;margin-left:${-winS / 2}px;background:#ffcf8a;box-shadow:0 0 ${winS * 1.6}px ${winS * 0.5}px rgba(255,196,110,.5)`;
+
+    const rainStyle = `position:absolute;left:0;right:0;top:0;bottom:0;background:repeating-linear-gradient(74deg, rgba(0,0,0,0) 0 7px, ${b > 0.55 ? 'rgba(60,70,90,.30)' : 'rgba(206,216,235,.26)'} 7px 8px);opacity:${(w > 0.45 ? (w - 0.45) * 1.6 : 0).toFixed(2)};pointer-events:none`;
+    const grainStyle = `position:absolute;inset:0;background:repeating-linear-gradient(0deg, rgba(255,255,255,.018) 0 1px, rgba(0,0,0,.022) 1px 2px);pointer-events:none`;
+
+    return { skyStyle, stars, glowStyle, cloudAStyle, cloudBStyle, cloudCStyle, landStyle, pathStyle, markers, houseWrapStyle, roofStyle, bodyStyle, windowStyle, rainStyle, grainStyle, W };
+  }
+}
+</script>
+</body>
+</html>
