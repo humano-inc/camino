@@ -115,7 +115,7 @@ Any clonazepam that is not the promised piece of a slot.
 | Unscheduled extra | Rescue: amount + time |
 | Overflow of a bigger slot | Rescue linked to that scheduled event |
 
-Stored: `amountMg`, `takenAt`, optional `linkedScheduledId`.
+Stored: `amountMg`, `takenAt`, optional `linkedScheduledId`, optional `note`.
 
 Rescue does not rewrite the protocol.
 
@@ -212,7 +212,7 @@ Confirming is a step on the path. The sheet should feel like it rose out of the 
 
 ### 5.4 Rescue
 
-Amount (pieces first) + time (default now). Save. Weather can gather. No lecture.
+Amount (pieces first) + time (default now) + optional note. Save. Weather can gather. No lecture. The note is memory, not a reason you must give.
 
 ### 5.5 Protocol
 
@@ -235,7 +235,7 @@ Must show:
 
 - Weekly **actual** mg (everything swallowed).
 - Weekly **planned** mg (the protocol that week) — the staircase.
-- Rescue: count, mg, times.
+- Rescue: count, mg, times, notes.
 - Each protocol version and when you cut.
 - Skips and `less` as facts.
 
@@ -282,7 +282,7 @@ Tapping the notification opens Camino on today’s step.
 - I confirm taken, skipped, or a different amount, so the ledger is true.
 - If I take more than the slot, the extra is rescue and the promised piece still counts as the slot.
 - If I take less, the night is recorded as less — a quieter step.
-- On any day I can log a rescue (amount, time) without rewriting the protocol.
+- On any day I can log a rescue (amount, time, optional note) without rewriting the protocol.
 - If I confirm late, I can set the real time.
 - An old open step stays open until I confirm or skip it; the app does not auto-skip midnight.
 
@@ -297,7 +297,7 @@ Tapping the notification opens Camino on today’s step.
 
 - I can see weekly actual mg.
 - I can see weekly planned mg and the staircase of protocols.
-- I can see how many rescues, how big, and when.
+- I can see how many rescues, how big, when, and any note I left.
 - I can see skips and “took less.”
 - I can tell whether the trend is toward zero.
 
@@ -369,6 +369,7 @@ Rescue
   takenAt: Date
   amountMg: Double
   linkedScheduledId: UUID?
+  note: String?
 ```
 
 Derived, not stored: weekly planned, weekly actual, weather, brightness, distance.

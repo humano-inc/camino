@@ -36,11 +36,21 @@ struct SlotEditorView: View {
                 }
 
                 VStack(alignment: .leading, spacing: 9) {
-                    Text(Copy.days.uppercased())
+                    Text(Copy.rhythm.uppercased())
                         .font(.footnote)
                         .foregroundStyle(.secondary)
                         .tracking(0.4)
-                    weekdayRow
+                    Picker("", selection: cadenceIsInterval) {
+                        Text(Copy.weekdays).tag(false)
+                        Text(Copy.everyFewNights).tag(true)
+                    }
+                    .pickerStyle(.segmented)
+
+                    if draft.usesInterval {
+                        intervalEditor
+                    } else {
+                        weekdayRow
+                    }
                 }
 
                 if canDelete {
@@ -63,6 +73,104 @@ struct SlotEditorView: View {
             }
         }
         .onAppear { syncTime() }
+    }
+
+    private var cadenceIsInterval: Binding<Bool> {
+        Binding(
+            get: { draft.usesInterval },
+            set: { interval in
+                if interval {
+                    draft.weekdays = []
+                    if draft.intervalDays < 2 { draft.intervalDays = 3 }
+                    if draft.firstNight == nil {
+                        draft.firstNight = calendar.startOfDay(for: Date())
+                    }
+                } else {
+                    draft.intervalDays = 0
+                    draft.firstNight = nil
+                }
+            }
+        )
+    }
+
+    private var intervalEditor: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Stepper(value: intervalBinding, in: 2...10) {
+                Text(Copy.everyNNights(max(2, draft.intervalDays)))
+            }
+            Text(Copy.nightsOffAfterTake(max(1, draft.intervalDays - 1)))
+                .font(.footnote)
+                .foregroundStyle(.secondary)
+
+            Text(Copy.firstNight.uppercased())
+                .font(.footnote)
+                .foregroundStyle(.secondary)
+                .tracking(0.4)
+                .padding(.top, 4)
+
+            HStack(spacing: 7) {
+                firstNightPill(Copy.tonight, selected: isTonight) {
+                    draft.firstNight = todayStart
+                }
+                firstNightPill(Copy.tomorrow, selected: isTomorrow) {
+                    draft.firstNight = tomorrowStart
+                }
+            }
+
+            DatePicker(
+                Copy.firstNight,
+                selection: firstNightBinding,
+                displayedComponents: .date
+            )
+            .datePickerStyle(.compact)
+            .padding(.horizontal, 16)
+            .padding(.vertical, 11)
+            .background(Color(uiColor: .secondarySystemGroupedBackground), in: RoundedRectangle(cornerRadius: 12, style: .continuous))
+        }
+    }
+
+    private var intervalBinding: Binding<Int> {
+        Binding(
+            get: { max(2, draft.intervalDays) },
+            set: { draft.intervalDays = $0 }
+        )
+    }
+
+    private var firstNightBinding: Binding<Date> {
+        Binding(
+            get: { draft.firstNight ?? todayStart },
+            set: { draft.firstNight = calendar.startOfDay(for: $0) }
+        )
+    }
+
+    private var todayStart: Date { calendar.startOfDay(for: Date()) }
+    private var tomorrowStart: Date {
+        calendar.date(byAdding: .day, value: 1, to: todayStart) ?? todayStart
+    }
+
+    private var isTonight: Bool {
+        guard let first = draft.firstNight else { return false }
+        return calendar.isDate(first, inSameDayAs: todayStart)
+    }
+
+    private var isTomorrow: Bool {
+        guard let first = draft.firstNight else { return false }
+        return calendar.isDate(first, inSameDayAs: tomorrowStart)
+    }
+
+    private func firstNightPill(_ title: String, selected: Bool, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            Text(title)
+                .font(.system(size: 16, weight: selected ? .semibold : .regular))
+                .foregroundStyle(selected ? CaminoTheme.ink : Color.secondary)
+                .frame(maxWidth: .infinity, minHeight: 46)
+                .background(
+                    selected ? CaminoTheme.amber : Color(uiColor: .tertiarySystemFill),
+                    in: Capsule()
+                )
+        }
+        .buttonStyle(.plain)
+        .accessibilityAddTraits(selected ? .isSelected : [])
     }
 
     private var weekdayRow: some View {

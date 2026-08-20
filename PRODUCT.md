@@ -31,7 +31,7 @@ The mechanism a neighboring app cannot copy: a **versioned weekday protocol** yo
 - Physical unit: **0.25 mg** tablets, split to ¾ / ½ / ¼ (0.1875 / 0.125 / 0.0625 mg). Custom mg is allowed.
 - Typical starting attempt: one night slot, about 0.125 mg, on chosen weekdays.
 - Confirm every scheduled dose. Nothing is assumed taken.
-- Rescue is logged any day (amount + time).
+- Rescue is logged any day (amount + time + optional note).
 - Reminders only at slot times on those weekdays.
 - Used mostly at night, in bed or in a dim room, one-handed, in a hurry or in a fog.
 - Personal, on this iPhone, TestFlight. No account. No clinician portal.

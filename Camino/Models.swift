@@ -70,7 +70,13 @@ final class DoseSlot {
     var hour: Int
     var minute: Int
     /// Bit 0 = Sunday (Calendar weekday 1), bit 6 = Saturday.
+    /// Unused when `intervalDays >= 2`.
     var weekdayBits: Int
+    /// 0 = weekday chips. 2... = take once every this many nights
+    /// (so 3 means take, then two nights off).
+    var intervalDays: Int = 0
+    /// Start of the first promised night when using an interval cadence.
+    var anchorDayStart: Date?
 
     var protocolVersion: ProtocolVersion?
 
@@ -79,13 +85,17 @@ final class DoseSlot {
         amountMg: Double,
         hour: Int,
         minute: Int,
-        weekdayBits: Int
+        weekdayBits: Int,
+        intervalDays: Int = 0,
+        anchorDayStart: Date? = nil
     ) {
         self.id = id
         self.amountMg = amountMg
         self.hour = hour
         self.minute = minute
         self.weekdayBits = weekdayBits
+        self.intervalDays = intervalDays
+        self.anchorDayStart = anchorDayStart
     }
 
     var weekdays: Set<Int> {
@@ -98,11 +108,17 @@ final class DoseSlot {
     }
 
     var weeklyPlannedMg: Double {
-        amountMg * Double(weekdays.count)
+        SlotRhythm(intervalDays: intervalDays, weekdays: weekdays, firstNight: anchorDayStart)
+            .weeklyFactor() * amountMg
     }
 
     func includes(weekday: Int) -> Bool {
         weekdayBits & (1 << (weekday - 1)) != 0
+    }
+
+    func includes(on day: Date, calendar: Calendar) -> Bool {
+        SlotRhythm(intervalDays: intervalDays, weekdays: weekdays, firstNight: anchorDayStart)
+            .includes(day, calendar: calendar)
     }
 
     var timeComponents: DateComponents {
@@ -162,6 +178,8 @@ final class RescueDose {
     var takenAt: Date
     var amountMg: Double
     var linkedScheduledId: UUID?
+    /// Optional free-text. Never required. Not a reason prompt.
+    var note: String?
 
     var journey: Journey?
 
@@ -169,13 +187,24 @@ final class RescueDose {
         id: UUID = UUID(),
         takenAt: Date,
         amountMg: Double,
-        linkedScheduledId: UUID? = nil
+        linkedScheduledId: UUID? = nil,
+        note: String? = nil
     ) {
         self.id = id
         self.takenAt = takenAt
         self.amountMg = amountMg
         self.linkedScheduledId = linkedScheduledId
+        self.note = Self.cleanedNote(note)
     }
 
     var isOverflow: Bool { linkedScheduledId != nil }
+
+    static let noteLimit = 280
+
+    static func cleanedNote(_ text: String?) -> String? {
+        let trimmed = text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        guard !trimmed.isEmpty else { return nil }
+        if trimmed.count <= noteLimit { return trimmed }
+        return String(trimmed.prefix(noteLimit))
+    }
 }

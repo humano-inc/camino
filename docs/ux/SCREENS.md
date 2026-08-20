@@ -109,11 +109,12 @@ Rescue
 
 [ ¼  ½  ¾  1 ]     of 0.25     + Custom
 Taken at           [ now ]
+Note               [ optional ]
 
 [ Save ]           [ Cancel ]
 ```
 
-Save disabled until an amount > 0. No “reason.” No protocol suggestion.
+Save disabled until an amount > 0. Note is optional and unlabeled as a reason — no “why,” no required field. No protocol suggestion.
 
 Overflow rescues created by a bigger slot appear in Look back as rescue, and may show a quiet “from 22:00” link. They are not edited here unless he opens them from Look back.
 
@@ -176,7 +177,7 @@ If zero weekdays selected, Done is disabled.
 
 1. **This week** — actual mg, planned mg, rescue mg / count. Numbers first, then a small chart.
 2. **Weeks** — bar or step chart: planned (staircase) vs actual, toward zero. Weeks as columns, not a sparkline so small it becomes decoration.
-3. **Rescues** — count, total mg, list of recent (amount · time · date). Tap → read-only detail (edit same-day only while still walking).
+3. **Rescues** — count, total mg, list of recent (amount · time · date, plus note if any). Tap → note editor while still walking; read-only after arrival.
 4. **Promises** — protocol versions, date range, weekly planned. The staircase as a list.
 5. **Nights** — skips and less, as facts (date · planned · actual).
 6. **Export** — share journey JSON.

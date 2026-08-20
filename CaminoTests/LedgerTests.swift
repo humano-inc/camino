@@ -113,6 +113,43 @@ final class LedgerTests: XCTestCase {
         XCTAssertEqual(journey.rescues.count, 0)
     }
 
+    func testLogRescueStoresTrimmedNote() throws {
+        let journey = try Ledger.begin(slots: [nightSlot()], now: thursday, calendar: calendar, in: context)
+        try Ledger.logRescue(journey: journey, amountMg: 0.125, takenAt: thursday, note: "  couldn't sleep  ", in: context)
+        XCTAssertEqual(journey.rescues[0].note, "couldn't sleep")
+        XCTAssertNil(journey.rescues[0].linkedScheduledId)
+    }
+
+    func testLogRescueWhitespaceNoteIsNil() throws {
+        let journey = try Ledger.begin(slots: [nightSlot()], now: thursday, calendar: calendar, in: context)
+        try Ledger.logRescue(journey: journey, amountMg: 0.125, takenAt: thursday, note: "  \n", in: context)
+        XCTAssertNil(journey.rescues[0].note)
+    }
+
+    func testSetRescueNoteClearsAndCaps() throws {
+        let journey = try Ledger.begin(slots: [nightSlot()], now: thursday, calendar: calendar, in: context)
+        try Ledger.logRescue(journey: journey, amountMg: 0.125, takenAt: thursday, in: context)
+        let rescue = journey.rescues[0]
+        try Ledger.setRescueNote("  a hard hour  ", on: rescue, in: context)
+        XCTAssertEqual(rescue.note, "a hard hour")
+        try Ledger.setRescueNote("   ", on: rescue, in: context)
+        XCTAssertNil(rescue.note)
+        let long = String(repeating: "a", count: RescueDose.noteLimit + 40)
+        try Ledger.setRescueNote(long, on: rescue, in: context)
+        XCTAssertEqual(rescue.note?.count, RescueDose.noteLimit)
+    }
+
+    func testOverflowUpdateKeepsNote() throws {
+        let journey = try Ledger.begin(slots: [nightSlot()], now: thursday, calendar: calendar, in: context)
+        let event = Ledger.todayEvents(on: journey, now: thursday, calendar: calendar)[0]
+        try Ledger.confirm(event: event, entry: .amount(0.25), takenAt: thursday, now: thursday, in: context)
+        try Ledger.setRescueNote("from the slot", on: journey.rescues[0], in: context)
+        try Ledger.confirm(event: event, entry: .amount(0.1875), takenAt: thursday, now: thursday, in: context)
+        XCTAssertEqual(journey.rescues.count, 1)
+        XCTAssertEqual(journey.rescues[0].note, "from the slot")
+        XCTAssertEqual(journey.rescues[0].amountMg, 0.0625, accuracy: Tablet.epsilon)
+    }
+
     func testIndependentRescueDoesNotRewriteThePromise() throws {
         let journey = try Ledger.begin(slots: [nightSlot()], now: thursday, calendar: calendar, in: context)
         try Ledger.logRescue(journey: journey, amountMg: 0.125, takenAt: thursday, in: context)
@@ -159,6 +196,56 @@ final class LedgerTests: XCTestCase {
         let leftover = Ledger.unresolvedEvents(on: journey, now: morning, calendar: calendar)
         XCTAssertEqual(leftover.count, 1)
         XCTAssertEqual(leftover[0].status, .open)
+    }
+
+    func testIntervalEveryThreeNightsSkipsTheTwoInBetween() throws {
+        let slot = SlotDraft.everyFewNights(
+            interval: 3,
+            firstNight: thursday,
+            amountMg: 0.125,
+            calendar: calendar
+        )
+        let journey = try Ledger.begin(slots: [slot], now: thursday, calendar: calendar, in: context)
+
+        var later = DateComponents()
+        later.year = 2026
+        later.month = 8
+        later.day = 19
+        later.hour = 22
+        let sundayWeek = calendar.date(from: later)!
+        Ledger.materializeEvents(on: journey, now: sundayWeek, calendar: calendar, in: context)
+
+        let days = Set(journey.events.map { calendar.component(.day, from: $0.dayStart) })
+        XCTAssertEqual(days, [13, 16, 19])
+        XCTAssertEqual(journey.events.count, 3)
+        XCTAssertEqual(Ledger.todayEvents(on: journey, now: thursday, calendar: calendar).count, 1)
+
+        var friday = DateComponents()
+        friday.year = 2026
+        friday.month = 8
+        friday.day = 14
+        friday.hour = 22
+        let fridayNight = calendar.date(from: friday)!
+        XCTAssertTrue(Ledger.todayEvents(on: journey, now: fridayNight, calendar: calendar).isEmpty)
+        XCTAssertEqual(
+            Ledger.plannedMg(on: journey, day: fridayNight, calendar: calendar),
+            0,
+            accuracy: Tablet.epsilon
+        )
+    }
+
+    func testIntervalStartingTomorrowLeavesTonightEmpty() throws {
+        var friday = DateComponents()
+        friday.year = 2026
+        friday.month = 8
+        friday.day = 14
+        let first = calendar.date(from: friday)!
+        let slot = SlotDraft.everyFewNights(interval: 3, firstNight: first, calendar: calendar)
+        let journey = try Ledger.begin(slots: [slot], now: thursday, calendar: calendar, in: context)
+        XCTAssertTrue(Ledger.todayEvents(on: journey, now: thursday, calendar: calendar).isEmpty)
+
+        Ledger.materializeEvents(on: journey, now: first, calendar: calendar, in: context)
+        XCTAssertEqual(Ledger.todayEvents(on: journey, now: first, calendar: calendar).count, 1)
     }
 
     func testArrivalNeedsEmptyPromiseAndZeroToday() throws {

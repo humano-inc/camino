@@ -30,6 +30,8 @@ enum JourneyExport {
         var hour: Int
         var minute: Int
         var weekdays: [Int]
+        var intervalDays: Int
+        var firstNight: Date?
     }
 
     struct EventJSON: Codable {
@@ -51,6 +53,7 @@ enum JourneyExport {
         var takenAt: Date
         var amountMg: Double
         var linkedScheduledId: UUID?
+        var note: String?
     }
 
     static func snapshot(journeys: [Journey]) -> Snapshot {
@@ -74,7 +77,9 @@ enum JourneyExport {
                                     amountMg: slot.amountMg,
                                     hour: slot.hour,
                                     minute: slot.minute,
-                                    weekdays: slot.weekdays.sorted()
+                                    weekdays: slot.weekdays.sorted(),
+                                    intervalDays: slot.intervalDays,
+                                    firstNight: slot.anchorDayStart
                                 )
                             }
                         )
@@ -99,7 +104,8 @@ enum JourneyExport {
                             id: rescue.id,
                             takenAt: rescue.takenAt,
                             amountMg: rescue.amountMg,
-                            linkedScheduledId: rescue.linkedScheduledId
+                            linkedScheduledId: rescue.linkedScheduledId,
+                            note: rescue.note
                         )
                     }
                 )

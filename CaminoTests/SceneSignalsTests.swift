@@ -77,4 +77,16 @@ final class SceneSignalsTests: XCTestCase {
         let slot = SlotDraft(amountMg: 0.125, hour: 22, minute: 0, weekdays: [1, 3, 5, 7])
         XCTAssertEqual(PlannedMath.weeklyPlannedMg(slots: [slot]), 0.5, accuracy: Tablet.epsilon)
     }
+
+    func testWeeklyPlannedAveragesAnInterval() {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = TimeZone(secondsFromGMT: 0)!
+        let slot = SlotDraft.everyFewNights(
+            interval: 3,
+            firstNight: Date(timeIntervalSince1970: 0),
+            amountMg: 0.125,
+            calendar: calendar
+        )
+        XCTAssertEqual(PlannedMath.weeklyPlannedMg(slots: [slot]), 0.125 * 7 / 3, accuracy: Tablet.epsilon)
+    }
 }

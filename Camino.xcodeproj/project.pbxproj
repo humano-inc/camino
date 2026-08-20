@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		03CB17C77C4C453820D0C082 /* CaminoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D14D2152245F96217266B5A3 /* CaminoView.swift */; };
+		1576EB10D6681770B3EFC47F /* SlotRhythmTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164C693D679D31C4685BB44C /* SlotRhythmTests.swift */; };
 		1C251319DE09F6F174947AEF /* LedgerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8BFDEC8A505FAAFF4DB86B8 /* LedgerTests.swift */; };
 		258CB14C2A32C73B94E661D4 /* LookBackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DBE5E90DB11A63384080C7 /* LookBackView.swift */; };
 		3361E0688F2A531F555BF5CA /* SceneSignals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9FE363E66012086FD3EABB /* SceneSignals.swift */; };
@@ -50,6 +51,7 @@
 		07B1833DE74141DDB5594481 /* SceneSignalsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneSignalsTests.swift; sourceTree = "<group>"; };
 		0DA0B7DB47420EB72E2FA7A9 /* PiecePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PiecePicker.swift; sourceTree = "<group>"; };
 		0EC16B3270B9F35D31F0859D /* SlotDraft.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlotDraft.swift; sourceTree = "<group>"; };
+		164C693D679D31C4685BB44C /* SlotRhythmTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlotRhythmTests.swift; sourceTree = "<group>"; };
 		1CF6DE9DDEB649664EB3D91D /* ConfirmMathTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmMathTests.swift; sourceTree = "<group>"; };
 		248F8E2694C97363B1D5791C /* RescueSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RescueSheet.swift; sourceTree = "<group>"; };
 		26892C5F9892EC7E533510BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -93,6 +95,7 @@
 				1CF6DE9DDEB649664EB3D91D /* ConfirmMathTests.swift */,
 				E8BFDEC8A505FAAFF4DB86B8 /* LedgerTests.swift */,
 				07B1833DE74141DDB5594481 /* SceneSignalsTests.swift */,
+				164C693D679D31C4685BB44C /* SlotRhythmTests.swift */,
 			);
 			path = CaminoTests;
 			sourceTree = "<group>";
@@ -234,6 +237,7 @@
 				461D9F49CD3D8F269686ECB3 /* ConfirmMathTests.swift in Sources */,
 				1C251319DE09F6F174947AEF /* LedgerTests.swift in Sources */,
 				7440DC6C6D22BBB0A542E839 /* SceneSignalsTests.swift in Sources */,
+				1576EB10D6681770B3EFC47F /* SlotRhythmTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -312,7 +316,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = D4ADFZ3XZL;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -386,7 +390,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = D4ADFZ3XZL;
 				ENABLE_NS_ASSERTIONS = NO;

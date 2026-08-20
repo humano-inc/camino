@@ -38,7 +38,7 @@ struct ProtocolEditorView: View {
                                 VStack(alignment: .leading, spacing: 3) {
                                     Text(CaminoFormat.pathAmount(hour: slot.hour, minute: slot.minute, amount: slot.amountMg, calendar: calendar))
                                         .foregroundStyle(.primary)
-                                    Text(WeekdayOrder.shortNames(weekdays: slot.weekdays, calendar: calendar))
+                                    Text(slot.cadenceSummary(calendar: calendar))
                                         .font(.footnote)
                                         .foregroundStyle(.secondary)
                                         .tracking(0.4)
@@ -55,14 +55,20 @@ struct ProtocolEditorView: View {
                     }
 
                     Button(Copy.addATime) {
-                        let fresh = SlotDraft()
+                        let fresh = SlotDraft.everyFewNights(
+                            interval: 3,
+                            firstNight: calendar.startOfDay(for: Date()),
+                            calendar: calendar
+                        )
                         slots.append(fresh)
                         addingNew = true
                         editing = fresh
                     }
                 } footer: {
                     VStack(alignment: .leading, spacing: 12) {
-                        Text(Copy.thisWeekPlanned(formatMg(weekly)))
+                        Text(slots.contains(where: \.usesInterval)
+                             ? Copy.aboutWeekPlanned(formatMg(weekly))
+                             : Copy.thisWeekPlanned(formatMg(weekly)))
                         if remindersOff {
                             HStack(spacing: 4) {
                                 Text(Copy.notificationsOff)

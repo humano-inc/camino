@@ -94,12 +94,22 @@ enum Ledger {
         journey: Journey,
         amountMg: Double,
         takenAt: Date,
+        note: String? = nil,
         in context: ModelContext
     ) throws {
         guard amountMg > Tablet.epsilon else { return }
-        let rescue = RescueDose(takenAt: takenAt, amountMg: amountMg)
+        let rescue = RescueDose(takenAt: takenAt, amountMg: amountMg, note: note)
         rescue.journey = journey
         context.insert(rescue)
+        try context.save()
+    }
+
+    static func setRescueNote(
+        _ text: String?,
+        on rescue: RescueDose,
+        in context: ModelContext
+    ) throws {
+        rescue.note = RescueDose.cleanedNote(text)
         try context.save()
     }
 
@@ -129,11 +139,9 @@ enum Ledger {
 
         while day <= today {
             let next = calendar.date(byAdding: .day, value: 1, to: day) ?? day.addingTimeInterval(86_400)
-            let weekday = calendar.component(.weekday, from: day)
-
             for version in journey.protocolVersions {
                 guard versionActive(version, on: day, until: next) else { continue }
-                for slot in version.slots where slot.includes(weekday: weekday) {
+                for slot in version.slots where slot.includes(on: day, calendar: calendar) {
                     let key = eventKey(day: day, slotId: slot.id)
                     if existing.contains(key) { continue }
                     let event = ScheduledEvent(
@@ -287,7 +295,9 @@ enum Ledger {
             amountMg: draft.amountMg,
             hour: draft.hour,
             minute: draft.minute,
-            weekdayBits: draft.weekdayBits
+            weekdayBits: draft.weekdayBits,
+            intervalDays: draft.intervalDays,
+            anchorDayStart: draft.firstNight
         )
         slot.protocolVersion = version
         context.insert(slot)
@@ -401,11 +411,10 @@ enum Ledger {
     static func plannedMg(on journey: Journey, day: Date, calendar: Calendar) -> Double {
         let dayStart = calendar.startOfDay(for: day)
         let dayEnd = calendar.date(byAdding: .day, value: 1, to: dayStart) ?? dayStart.addingTimeInterval(86_400)
-        let weekday = calendar.component(.weekday, from: dayStart)
         var seen = Set<UUID>()
         var total = 0.0
         for version in journey.protocolVersions where versionActive(version, on: dayStart, until: dayEnd) {
-            for slot in version.slots where slot.includes(weekday: weekday) && seen.insert(slot.id).inserted {
+            for slot in version.slots where slot.includes(on: dayStart, calendar: calendar) && seen.insert(slot.id).inserted {
                 total += slot.amountMg
             }
         }

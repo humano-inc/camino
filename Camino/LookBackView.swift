@@ -9,6 +9,7 @@ struct LookBackView: View {
     @Query(sort: \Journey.startedAt) private var journeys: [Journey]
     @State private var exportURL: URL?
     @State private var confirmAgain = false
+    @State private var noteTarget: RescueNoteTarget?
 
     private var week: WeekLoad { Ledger.thisWeek(on: journey, now: .now, calendar: calendar) }
     private var weeks: [WeekLoad] { Ledger.weekLoads(on: journey, now: .now, calendar: calendar) }
@@ -38,6 +39,11 @@ struct LookBackView: View {
         }
         .navigationTitle(Copy.lookBack)
         .navigationBarTitleDisplayMode(.large)
+        .sheet(item: $noteTarget) { target in
+            if let rescue = recentRescues.first(where: { $0.id == target.id }) {
+                RescueNoteEditor(rescue: rescue, calendar: calendar)
+            }
+        }
         .confirmationDialog(Copy.beginAgainTitle, isPresented: $confirmAgain, titleVisibility: .visible) {
             Button(Copy.beginAgain) {
                 NotificationCenter.default.post(name: .caminoBeginAgain, object: nil)
@@ -109,20 +115,20 @@ struct LookBackView: View {
                     .foregroundStyle(.secondary)
             } else {
                 ForEach(items, id: \.id) { rescue in
-                    HStack {
-                        Text("\(formatMg(rescue.amountMg)) · \(rescue.takenAt.formatted(date: .omitted, time: .shortened))")
-                        Spacer()
-                        HStack(spacing: 6) {
-                            if rescue.isOverflow, let event = linkedEvent(rescue) {
-                                Text("\(Copy.fromSlotPrefix) \(CaminoFormat.time(hour: event.hour, minute: event.minute, calendar: calendar))")
-                                    .foregroundStyle(.secondary)
+                    HStack(alignment: .top, spacing: 8) {
+                        rescueFacts(rescue)
+                        if !journey.isArrived {
+                            Button {
+                                noteTarget = RescueNoteTarget(id: rescue.id)
+                            } label: {
+                                Image(systemName: "chevron.right")
+                                    .font(.footnote)
+                                    .foregroundStyle(.tertiary)
                             }
-                            Text(CaminoFormat.weekdayDate(rescue.takenAt, calendar: calendar))
-                                .foregroundStyle(.secondary)
+                            .buttonStyle(.borderless)
+                            .accessibilityLabel(Copy.note)
                         }
-                        .font(.subheadline)
                     }
-                    .accessibilityLabel("\(formatMg(rescue.amountMg)) milligrams, \(rescue.takenAt.formatted())")
                 }
             }
         }
@@ -175,6 +181,37 @@ struct LookBackView: View {
         }
     }
 
+    private func rescueFacts(_ rescue: RescueDose) -> some View {
+        VStack(alignment: .leading, spacing: 4) {
+            HStack {
+                Text("\(formatMg(rescue.amountMg)) · \(rescue.takenAt.formatted(date: .omitted, time: .shortened))")
+                Spacer()
+                HStack(spacing: 6) {
+                    if rescue.isOverflow, let event = linkedEvent(rescue) {
+                        Text("\(Copy.fromSlotPrefix) \(CaminoFormat.time(hour: event.hour, minute: event.minute, calendar: calendar))")
+                            .foregroundStyle(.secondary)
+                    }
+                    Text(CaminoFormat.weekdayDate(rescue.takenAt, calendar: calendar))
+                        .foregroundStyle(.secondary)
+                }
+                .font(.subheadline)
+            }
+            if let note = rescue.note {
+                Text(note)
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+            }
+        }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(rescueAccessibility(rescue))
+    }
+
+    private func rescueAccessibility(_ rescue: RescueDose) -> String {
+        var parts = ["\(formatMg(rescue.amountMg)) milligrams", rescue.takenAt.formatted()]
+        if let note = rescue.note { parts.append(note) }
+        return parts.joined(separator: ", ")
+    }
+
     private func nightDetail(_ event: ScheduledEvent) -> String {
         let day = CaminoFormat.weekdayDate(event.dayStart, calendar: calendar)
         if event.status == .less {
@@ -196,6 +233,10 @@ struct LookBackView: View {
         }
         return url
     }
+}
+
+private struct RescueNoteTarget: Identifiable {
+    var id: UUID
 }
 
 extension Notification.Name {

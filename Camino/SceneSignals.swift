@@ -89,6 +89,6 @@ struct WeekLoad: Equatable {
 
 enum PlannedMath {
     static func weeklyPlannedMg(slots: [SlotDraft]) -> Double {
-        slots.reduce(0) { $0 + $1.amountMg * Double($1.weekdays.count) }
+        slots.reduce(0) { $0 + $1.weeklyPlannedMg }
     }
 }

@@ -32,7 +32,26 @@ enum Copy {
 
     static let thisWeekPlanned: (String) -> String = { "This week \($0) mg planned" }
     static let amount = "Amount"
+    static let note = "Note"
     static let days = "Days"
+    static let rhythm = "Rhythm"
+    static let weekdays = "Weekdays"
+    static let everyFewNights = "Every few nights"
+    static func everyNNights(_ n: Int) -> String { "Every \(n) nights" }
+    static func nightsOffAfterTake(_ off: Int) -> String {
+        let span: String
+        switch off {
+        case 1: span = "one night"
+        case 2: span = "two nights"
+        case 3: span = "three nights"
+        default: span = "\(off) nights"
+        }
+        return "Take, then \(span) off."
+    }
+    static let firstNight = "First night"
+    static let tonight = "Tonight"
+    static let tomorrow = "Tomorrow"
+    static func aboutWeekPlanned(_ amount: String) -> String { "About \(amount) mg a week" }
     static let deleteThisTime = "Delete this time"
     static let custom = "Custom"
     static let pieceQuarter = "¼"

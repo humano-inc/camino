@@ -36,8 +36,7 @@ enum ReminderScheduler {
 
         for offset in 0..<14 {
             guard let day = calendar.date(byAdding: .day, value: offset, to: today) else { continue }
-            let weekday = calendar.component(.weekday, from: day)
-            for slot in current.slots where slot.includes(weekday: weekday) {
+            for slot in current.slots where slot.includes(on: day, calendar: calendar) {
                 if offset == 0 && confirmedToday.contains(slot.id) { continue }
                 var components = calendar.dateComponents([.year, .month, .day], from: day)
                 components.hour = slot.hour
