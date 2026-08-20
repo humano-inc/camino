@@ -33,6 +33,7 @@ enum Copy {
     static let thisWeekPlanned: (String) -> String = { "This week \($0) mg planned" }
     static let amount = "Amount"
     static let note = "Note"
+    static let noteHint = "optional"
     static let days = "Days"
     static let rhythm = "Rhythm"
     static let weekdays = "Weekdays"

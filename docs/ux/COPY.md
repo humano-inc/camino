@@ -91,6 +91,7 @@ No helper on skip. No helper on less.
 | rescue.title | Rescue |
 | rescue.taken_at | Time |
 | rescue.note | Note |
+| rescue.note_hint | optional |
 | rescue.save | Save |
 | rescue.cancel | Cancel |
 | rescue.from_slot | From `{time}` |

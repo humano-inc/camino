@@ -74,20 +74,30 @@ struct RescueNoteField: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             Text(Copy.note.uppercased())
-                .font(.footnote)
-                .foregroundStyle(.secondary)
+                .font(.footnote.weight(.semibold))
+                .foregroundStyle(.primary)
                 .tracking(0.4)
-            TextField("", text: $text, axis: .vertical)
-                .accessibilityLabel(Copy.note)
-                .lineLimit(1...3)
-                .padding(.horizontal, 16)
-                .padding(.vertical, 11)
-                .background(Color(uiColor: .secondarySystemGroupedBackground), in: RoundedRectangle(cornerRadius: 12, style: .continuous))
-                .onChange(of: text) { _, new in
-                    if new.count > RescueDose.noteLimit {
-                        text = String(new.prefix(RescueDose.noteLimit))
-                    }
+            TextField(
+                "",
+                text: $text,
+                prompt: Text(Copy.noteHint).foregroundStyle(CaminoTheme.amber.opacity(0.9)),
+                axis: .vertical
+            )
+            .accessibilityLabel(Copy.note)
+            .lineLimit(2...4)
+            .padding(.horizontal, 16)
+            .padding(.vertical, 14)
+            .frame(minHeight: 56, alignment: .top)
+            .background(Color(uiColor: .tertiarySystemBackground), in: RoundedRectangle(cornerRadius: 12, style: .continuous))
+            .overlay(
+                RoundedRectangle(cornerRadius: 12, style: .continuous)
+                    .stroke(CaminoTheme.amber.opacity(0.85), lineWidth: 1.5)
+            )
+            .onChange(of: text) { _, new in
+                if new.count > RescueDose.noteLimit {
+                    text = String(new.prefix(RescueDose.noteLimit))
                 }
+            }
         }
     }
 }

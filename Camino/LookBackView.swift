@@ -198,8 +198,8 @@ struct LookBackView: View {
             }
             if let note = rescue.note {
                 Text(note)
-                    .font(.footnote)
-                    .foregroundStyle(.secondary)
+                    .font(.subheadline)
+                    .foregroundStyle(.primary)
             }
         }
         .accessibilityElement(children: .combine)
