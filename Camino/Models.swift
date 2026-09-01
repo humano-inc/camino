@@ -6,6 +6,8 @@ enum EventStatus: String, Codable, CaseIterable {
     case taken
     case skipped
     case less
+    /// Not taken tonight; the same promise lands on tomorrow's path.
+    case delayed
 }
 
 @Model

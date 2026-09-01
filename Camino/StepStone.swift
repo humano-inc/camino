@@ -64,6 +64,11 @@ struct StepStone: View {
             Capsule()
                 .fill(Color(red: 0.94, green: 0.90, blue: 0.82).opacity(0.7))
                 .frame(width: size, height: 3)
+        case .delayed:
+            Image(systemName: "arrow.right")
+                .font(.system(size: size - 2, weight: .semibold))
+                .foregroundStyle(Color(red: 0.94, green: 0.90, blue: 0.82).opacity(0.7))
+                .frame(width: size, height: size)
         }
     }
 
@@ -90,6 +95,10 @@ struct StepStone: View {
             }
         case .skipped:
             Text("\(time) · skipped")
+                .font(.system(size: settledSize, weight: .regular))
+                .foregroundStyle(CaminoTheme.cream.opacity(0.62))
+        case .delayed:
+            Text("\(time) · \(Copy.delayedStone)")
                 .font(.system(size: settledSize, weight: .regular))
                 .foregroundStyle(CaminoTheme.cream.opacity(0.62))
         }
@@ -129,6 +138,8 @@ struct StepStone: View {
             )
         case .skipped:
             return Copy.voStepSkipped(time: time)
+        case .delayed:
+            return Copy.voStepDelayed(time: time)
         }
     }
 }

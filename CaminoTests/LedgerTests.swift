@@ -277,6 +277,76 @@ final class LedgerTests: XCTestCase {
         XCTAssertEqual(Ledger.todayEvents(on: journey, now: first, calendar: calendar).count, 1)
     }
 
+    func testDelayIntervalReanchorsFromTheNewNight() throws {
+        let slot = SlotDraft.everyFewNights(interval: 3, firstNight: thursday, amountMg: 0.125, calendar: calendar)
+        let journey = try Ledger.begin(slots: [slot], now: thursday, calendar: calendar, in: context)
+        let event = Ledger.todayEvents(on: journey, now: thursday, calendar: calendar)[0]
+        let friday = calendar.date(byAdding: .day, value: 1, to: thursday)!
+
+        try Ledger.delay(event: event, now: thursday, calendar: calendar, in: context)
+
+        XCTAssertEqual(event.status, .delayed)
+        XCTAssertEqual(event.actualAmountMg ?? -1, 0)
+        XCTAssertEqual(journey.protocolVersions.count, 2)
+        XCTAssertEqual(
+            journey.currentProtocol?.slots[0].anchorDayStart,
+            calendar.startOfDay(for: friday)
+        )
+        // The promise weighs the same; only the night moved.
+        XCTAssertEqual(
+            journey.currentProtocol?.weeklyPlannedMg ?? -1,
+            7.0 / 3.0 * 0.125,
+            accuracy: Tablet.epsilon
+        )
+        // History stays true: Thursday was promised under the old version.
+        XCTAssertEqual(Ledger.plannedMg(on: journey, day: thursday, calendar: calendar), 0.125, accuracy: Tablet.epsilon)
+
+        // The dose lands on Friday, then the rhythm walks on from there.
+        Ledger.materializeEvents(on: journey, now: friday, calendar: calendar, in: context)
+        XCTAssertEqual(Ledger.todayEvents(on: journey, now: friday, calendar: calendar).count, 1)
+        XCTAssertTrue(Ledger.unresolvedEvents(on: journey, now: friday, calendar: calendar).isEmpty)
+
+        let monday = calendar.date(byAdding: .day, value: 4, to: thursday)!
+        Ledger.materializeEvents(on: journey, now: monday, calendar: calendar, in: context)
+        let days = Set(journey.events.map { calendar.component(.day, from: $0.dayStart) })
+        XCTAssertEqual(days, [13, 14, 17])
+    }
+
+    func testDelayWeekdaySlotAddsAOneOffStepTomorrow() throws {
+        let journey = try Ledger.begin(slots: [nightSlot(weekdays: [5])], now: thursday, calendar: calendar, in: context)
+        let event = Ledger.todayEvents(on: journey, now: thursday, calendar: calendar)[0]
+        let friday = calendar.date(byAdding: .day, value: 1, to: thursday)!
+
+        try Ledger.delay(event: event, now: thursday, calendar: calendar, in: context)
+
+        XCTAssertEqual(event.status, .delayed)
+        XCTAssertEqual(journey.protocolVersions.count, 1)
+        let moved = Ledger.todayEvents(on: journey, now: friday, calendar: calendar)
+        XCTAssertEqual(moved.count, 1)
+        XCTAssertEqual(moved[0].status, .open)
+        XCTAssertEqual(moved[0].plannedAmountMg, 0.125, accuracy: Tablet.epsilon)
+        XCTAssertEqual(moved[0].slotId, event.slotId)
+    }
+
+    func testCanDelayGuards() throws {
+        // Tomorrow already promised: no delay.
+        let nightly = try Ledger.begin(slots: [nightSlot(weekdays: [1, 2, 3, 4, 5, 6, 7])], now: thursday, calendar: calendar, in: context)
+        let nightlyEvent = Ledger.todayEvents(on: nightly, now: thursday, calendar: calendar)[0]
+        XCTAssertFalse(Ledger.canDelay(event: nightlyEvent, now: thursday, calendar: calendar))
+
+        let journey = try Ledger.begin(slots: [nightSlot(weekdays: [5])], now: thursday, calendar: calendar, in: context)
+        let event = Ledger.todayEvents(on: journey, now: thursday, calendar: calendar)[0]
+        XCTAssertTrue(Ledger.canDelay(event: event, now: thursday, calendar: calendar))
+
+        // A night already gone is confirmed for what happened, not delayed.
+        let morning = calendar.date(byAdding: .hour, value: 11, to: thursday)!
+        XCTAssertFalse(Ledger.canDelay(event: event, now: morning, calendar: calendar))
+
+        // A confirmed step cannot be delayed.
+        try Ledger.confirm(event: event, entry: .taken, takenAt: thursday, now: thursday, in: context)
+        XCTAssertFalse(Ledger.canDelay(event: event, now: thursday, calendar: calendar))
+    }
+
     func testArrivalNeedsEmptyPromiseAndZeroToday() throws {
         let journey = try Ledger.begin(slots: [nightSlot()], now: thursday, calendar: calendar, in: context)
         XCTAssertFalse(Ledger.arrivalIsOfferable(on: journey, now: thursday, calendar: calendar))

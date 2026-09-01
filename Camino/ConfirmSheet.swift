@@ -89,6 +89,12 @@ struct ConfirmSheet: View {
             row(Copy.skip, prominent: false) {
                 commit(.skipped)
             }
+            if Ledger.canDelay(event: event, calendar: calendar) {
+                Divider()
+                row(Copy.delayToTomorrow, prominent: false) {
+                    commitDelay()
+                }
+            }
             if !showingDifferent {
                 Divider()
                 row(Copy.differentAmount, prominent: false) {
@@ -131,7 +137,7 @@ struct ConfirmSheet: View {
                 amount = event.actualAmountMg ?? event.plannedAmountMg
             case .taken:
                 amount = event.plannedAmountMg + overflowExisting
-            case .skipped:
+            case .skipped, .delayed:
                 amount = event.plannedAmountMg
             case .open:
                 amount = event.plannedAmountMg
@@ -155,5 +161,17 @@ struct ConfirmSheet: View {
 
     private func saveDifferent() {
         commit(.amount(amount))
+    }
+
+    private func commitDelay() {
+        do {
+            try Ledger.delay(event: event, calendar: calendar, in: context)
+            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+            ReminderScheduler.cancel(event: event, calendar: calendar)
+            onFinished()
+            dismiss()
+        } catch {
+            // Stay on the sheet; the ledger did not change.
+        }
     }
 }

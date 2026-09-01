@@ -20,6 +20,9 @@ enum Copy {
 
     static let taken = "Taken"
     static let skip = "Skip"
+    static let delayToTomorrow = "Delay to tomorrow"
+    static let delayedStone = "tomorrow"
+    static let delayed = "Delayed"
     static let differentAmount = "Different amount"
     static let time = "Time"
     static let save = "Save"
@@ -112,6 +115,10 @@ enum Copy {
 
     static func voStepSkipped(time: String) -> String {
         "\(time), skipped"
+    }
+
+    static func voStepDelayed(time: String) -> String {
+        "\(time), delayed to tomorrow"
     }
 
     static let voOff = "No dose on the path tonight"

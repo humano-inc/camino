@@ -90,6 +90,72 @@ enum Ledger {
         try context.save()
     }
 
+    /// A delay is offered only for tonight's open step, and only when tomorrow
+    /// is not already a promised night for the same slot.
+    static func canDelay(event: ScheduledEvent, now: Date = .now, calendar: Calendar = .current) -> Bool {
+        guard event.isOpen else { return false }
+        guard let journey = event.journey, !journey.isArrived else { return false }
+        guard calendar.isDate(event.dayStart, inSameDayAs: now) else { return false }
+        guard let tomorrow = calendar.date(byAdding: .day, value: 1, to: calendar.startOfDay(for: event.dayStart)) else { return false }
+        if let slot = slot(for: event, on: journey), slot.includes(on: tomorrow, calendar: calendar) {
+            return false
+        }
+        return true
+    }
+
+    /// Stretch the promise one night: tonight is resolved as `delayed` and the
+    /// dose lands tomorrow. An interval rhythm starts counting again from the
+    /// night the dose actually lands on (a new protocol version, so history
+    /// stays true); a weekday slot gets a one-off step tomorrow.
+    static func delay(
+        event: ScheduledEvent,
+        now: Date = .now,
+        calendar: Calendar = .current,
+        in context: ModelContext
+    ) throws {
+        guard canDelay(event: event, now: now, calendar: calendar),
+              let journey = event.journey,
+              let tomorrow = calendar.date(byAdding: .day, value: 1, to: calendar.startOfDay(for: event.dayStart))
+        else { return }
+
+        event.status = .delayed
+        event.actualAmountMg = 0
+        event.takenAt = nil
+        event.confirmedAt = now
+
+        let slot = slot(for: event, on: journey)
+        let inCurrent = journey.currentProtocol?.slots.contains { $0.id == event.slotId } ?? false
+        if let slot, slot.intervalDays >= 2, inCurrent {
+            var drafts = (journey.currentProtocol?.slots ?? []).map(SlotDraft.init)
+            if let index = drafts.firstIndex(where: { $0.id == event.slotId }) {
+                drafts[index].firstNight = tomorrow
+            }
+            try saveProtocol(journey: journey, slots: drafts, now: now, calendar: calendar, in: context)
+        } else {
+            let moved = ScheduledEvent(
+                dayStart: tomorrow,
+                slotId: event.slotId,
+                protocolId: event.protocolId,
+                plannedAmountMg: event.plannedAmountMg,
+                hour: event.hour,
+                minute: event.minute
+            )
+            moved.journey = journey
+            context.insert(moved)
+            try context.save()
+        }
+    }
+
+    static func slot(for event: ScheduledEvent, on journey: Journey) -> DoseSlot? {
+        if let current = journey.currentProtocol?.slots.first(where: { $0.id == event.slotId }) {
+            return current
+        }
+        return journey.protocolVersions
+            .sorted { $0.startedAt > $1.startedAt }
+            .compactMap { version in version.slots.first { $0.id == event.slotId } }
+            .first
+    }
+
     static func logRescue(
         journey: Journey,
         amountMg: Double,

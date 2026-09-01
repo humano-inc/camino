@@ -140,7 +140,7 @@ struct LookBackView: View {
             statusMark(event.status)
                 .frame(width: 20, alignment: .leading)
             Text(nightWord(event.status))
-                .foregroundStyle(event.status == .skipped ? AnyShapeStyle(.secondary) : AnyShapeStyle(.primary))
+                .foregroundStyle(event.status == .skipped || event.status == .delayed ? AnyShapeStyle(.secondary) : AnyShapeStyle(.primary))
             Spacer()
             Text(nightDetail(event))
                 .foregroundStyle(.secondary)
@@ -208,12 +208,18 @@ struct LookBackView: View {
             Capsule()
                 .fill(Color(red: 0.235, green: 0.235, blue: 0.263).opacity(0.35))
                 .frame(width: size, height: 3)
+        case .delayed:
+            Image(systemName: "arrow.right")
+                .font(.system(size: size - 2, weight: .semibold))
+                .foregroundStyle(.secondary)
+                .frame(width: size, height: size)
         }
     }
 
     private func nightWord(_ status: EventStatus) -> String {
         switch status {
         case .skipped: return Copy.skipped
+        case .delayed: return Copy.delayed
         case .less: return Copy.lessThanPromised
         case .taken, .open: return Copy.taken
         }
@@ -257,7 +263,7 @@ struct LookBackView: View {
             return "\(formatMg(event.plannedAmountMg)) → \(formatMg(event.actualAmountMg ?? 0)) · \(day)"
         case .taken, .open:
             return "\(formatMg(event.actualAmountMg ?? event.plannedAmountMg)) · \(day)"
-        case .skipped:
+        case .skipped, .delayed:
             return "\(formatMg(event.plannedAmountMg)) · \(day)"
         }
     }
