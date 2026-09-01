@@ -126,6 +126,35 @@ final class LedgerTests: XCTestCase {
         XCTAssertNil(journey.rescues[0].note)
     }
 
+    func testTimelineMergesRescuesAndConfirmedNights() throws {
+        let journey = try Ledger.begin(slots: [nightSlot()], now: thursday, calendar: calendar, in: context)
+        let event = Ledger.todayEvents(on: journey, now: thursday, calendar: calendar)[0]
+        try Ledger.confirm(event: event, entry: .taken, takenAt: thursday, now: thursday, in: context)
+        try Ledger.logRescue(journey: journey, amountMg: 0.0625, takenAt: thursday.addingTimeInterval(3600), in: context)
+
+        let rows = Ledger.timeline(on: journey, calendar: calendar)
+        XCTAssertEqual(rows.count, 2)
+        guard case .rescue(let rescue) = rows[0], case .night(let night) = rows[1] else {
+            return XCTFail("Expected the later rescue above the confirmed night")
+        }
+        XCTAssertEqual(rescue.amountMg, 0.0625, accuracy: 0.0001)
+        XCTAssertEqual(night.id, event.id)
+    }
+
+    func testTimelineExcludesOpenNightsAndPutsOverflowAboveItsNight() throws {
+        let journey = try Ledger.begin(slots: [nightSlot()], now: thursday, calendar: calendar, in: context)
+        let event = Ledger.todayEvents(on: journey, now: thursday, calendar: calendar)[0]
+        XCTAssertTrue(Ledger.timeline(on: journey, calendar: calendar).isEmpty)
+
+        try Ledger.confirm(event: event, entry: .amount(0.25), takenAt: thursday, now: thursday, in: context)
+        let rows = Ledger.timeline(on: journey, calendar: calendar)
+        XCTAssertEqual(rows.count, 2)
+        guard case .rescue(let overflow) = rows[0], case .night = rows[1] else {
+            return XCTFail("Expected the overflow rescue above the night it spilled from")
+        }
+        XCTAssertEqual(overflow.linkedScheduledId, event.id)
+    }
+
     func testSetRescueNoteClearsAndCaps() throws {
         let journey = try Ledger.begin(slots: [nightSlot()], now: thursday, calendar: calendar, in: context)
         try Ledger.logRescue(journey: journey, amountMg: 0.125, takenAt: thursday, in: context)

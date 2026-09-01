@@ -248,6 +248,18 @@ enum Ledger {
         var hasFacts: Bool
     }
 
+    enum NightRow: Identifiable {
+        case night(ScheduledEvent)
+        case rescue(RescueDose)
+
+        var id: UUID {
+            switch self {
+            case .night(let event): return event.id
+            case .rescue(let rescue): return rescue.id
+            }
+        }
+    }
+
     static func factWindow(on journey: Journey, now: Date, calendar: Calendar) -> FactWindow {
         let today = calendar.startOfDay(for: now)
         let journeyStart = calendar.startOfDay(for: journey.startedAt)
@@ -277,10 +289,23 @@ enum Ledger {
         )
     }
 
-    static func nights(on journey: Journey) -> [ScheduledEvent] {
-        journey.events
-            .filter { $0.status == .skipped || $0.status == .less }
-            .sorted { $0.dayStart > $1.dayStart }
+    static func timeline(on journey: Journey, calendar: Calendar) -> [NightRow] {
+        var rows: [(moment: Date, rescueFirst: Int, row: NightRow)] = journey.events
+            .filter { $0.isConfirmed }
+            .map { event in
+                let moment = event.takenAt
+                    ?? calendar.date(bySettingHour: event.hour, minute: event.minute, second: 0, of: event.dayStart)
+                    ?? event.dayStart
+                return (moment, 0, .night(event))
+            }
+        rows += journey.rescues.map { ($0.takenAt, 1, .rescue($0)) }
+        return rows
+            .sorted {
+                if $0.moment != $1.moment { return $0.moment > $1.moment }
+                // An overflow rescue shares its event's takenAt; show it above the promise it spilled from.
+                return $0.rescueFirst > $1.rescueFirst
+            }
+            .map(\.row)
     }
 
     static func overflowRescue(for event: ScheduledEvent, on journey: Journey) -> RescueDose? {
